@@ -10,3 +10,9 @@ export const newGameSchema = {
     definition: Joi.string().required(),
   }),
 };
+
+export const deleteGameSchema = {
+  params: Joi.object({
+    gameId: Joi.string().required(),
+  }),
+};
