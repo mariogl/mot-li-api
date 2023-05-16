@@ -23,9 +23,13 @@ class GamesMongoRepository implements GamesRepository {
   }
 
   async deleteGame(gameId: string): Promise<string> {
-    await Game.findByIdAndDelete(gameId);
+    const deletedGame = await Game.findByIdAndDelete(gameId);
 
-    return gameId;
+    if (!deletedGame) {
+      throw new CustomError("Game not found", 404);
+    }
+
+    return deletedGame._id.toString();
   }
 
   async updateGame(game: GameStructure): Promise<GameStructure> {
