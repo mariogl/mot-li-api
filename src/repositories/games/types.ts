@@ -4,4 +4,5 @@ export interface GamesRepository {
   getGames: () => Promise<GameStructure[]>;
   addGame: (game: GameDataStructure) => Promise<GameStructure>;
   deleteGame: (gameId: string) => Promise<string>;
+  updateGame: (game: GameStructure) => Promise<GameStructure>;
 }
