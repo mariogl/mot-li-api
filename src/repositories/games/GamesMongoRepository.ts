@@ -12,7 +12,9 @@ class GamesMongoRepository implements GamesRepository {
   async addGame(game: GameDataStructure): Promise<GameStructure> {
     const newGame = new Game({
       ...game,
-      date: new Date(new Date(game.date).toUTCString()).setUTCHours(0, 0, 0, 0),
+      length: game.word.length,
+      date: new Date(),
+      // Date: new Date(new Date(game.date).toUTCString()).setUTCHours(0, 0, 0, 0),
     });
 
     await newGame.save();
