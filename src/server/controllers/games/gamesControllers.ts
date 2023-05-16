@@ -3,10 +3,15 @@ import { type GamesRepository } from "../../../repositories/games/types";
 import { type GameStructure, type GameDataStructure } from "../../../types";
 
 export const getGames =
-  (gamesRepository: GamesRepository) => async (req: Request, res: Response) => {
-    const games = await gamesRepository.getGames();
+  (gamesRepository: GamesRepository) =>
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const games = await gamesRepository.getGames();
 
-    res.status(200).json({ games });
+      res.status(200).json({ games });
+    } catch (error) {
+      next(error);
+    }
   };
 
 export const addGame =
@@ -18,13 +23,17 @@ export const addGame =
       GameDataStructure
     >,
     res: Response,
-    _next: NextFunction
+    next: NextFunction
   ) => {
     const game = req.body;
 
-    const newGame = await gamesRepository.addGame(game);
+    try {
+      const newGame = await gamesRepository.addGame(game);
 
-    res.status(201).json({ game: newGame });
+      res.status(201).json({ game: newGame });
+    } catch (error) {
+      next(error);
+    }
   };
 
 export const deleteGame =
@@ -32,13 +41,17 @@ export const deleteGame =
   async (
     req: Request<{ gameId: string }>,
     res: Response,
-    _next: NextFunction
+    next: NextFunction
   ) => {
     const { gameId } = req.params;
 
-    await gamesRepository.deleteGame(gameId);
+    try {
+      await gamesRepository.deleteGame(gameId);
 
-    res.status(200).json({ id: gameId });
+      res.status(200).json({ id: gameId });
+    } catch (error) {
+      next(error);
+    }
   };
 
 export const updateGame =
@@ -50,11 +63,15 @@ export const updateGame =
       GameStructure
     >,
     res: Response,
-    _next: NextFunction
+    next: NextFunction
   ) => {
     const game = req.body;
 
-    const updatedGame = await gamesRepository.updateGame(game);
+    try {
+      const updatedGame = await gamesRepository.updateGame(game);
 
-    res.status(200).json({ game: updatedGame });
+      res.status(200).json({ game: updatedGame });
+    } catch (error) {
+      next(error);
+    }
   };
