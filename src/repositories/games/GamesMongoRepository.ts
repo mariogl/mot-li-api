@@ -1,5 +1,5 @@
 import Game from "../../database/models/Game.js";
-import { type GameStructure } from "../../types.js";
+import { type GameDataStructure, type GameStructure } from "../../types.js";
 import { type GamesRepository } from "./types.js";
 
 class GamesMongoRepository implements GamesRepository {
@@ -7,6 +7,17 @@ class GamesMongoRepository implements GamesRepository {
     const games = await Game.find().lean();
 
     return games;
+  }
+
+  async addGame(game: GameDataStructure): Promise<GameStructure> {
+    const newGame = new Game({
+      ...game,
+      date: new Date(new Date(game.date).toUTCString()).setUTCHours(0, 0, 0, 0),
+    });
+
+    await newGame.save();
+
+    return newGame;
   }
 }
 
