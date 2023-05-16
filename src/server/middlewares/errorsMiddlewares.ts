@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
 import chalk from "chalk";
 import CustomError from "../../CustomError/CustomError.js";
+import { ValidationError } from "express-validation";
 
 export const notFoundError = (
   _req: Request,
@@ -18,11 +19,16 @@ export const generalError = (
   res: Response,
   _next: NextFunction
 ) => {
-  const statusCode = error instanceof CustomError ? error.statusCode : 500;
-  const errorMessage =
-    error instanceof CustomError ? error.publicMessage : "General error";
+  if (error instanceof ValidationError) {
+    (error as CustomError).publicMessage = error.details
+      .body!.map((error) => error.message.replaceAll('"', ""))
+      .join(" & ");
+  }
 
-  console.log(chalk(`Error: `, error.message));
+  const statusCode = error.statusCode ?? 500;
+  const errorMessage = error.publicMessage ?? "General error";
+
+  console.log(chalk.red(`Error: `, error.message));
 
   res.status(statusCode).json({ error: errorMessage });
 };
