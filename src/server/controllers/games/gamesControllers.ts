@@ -26,3 +26,17 @@ export const addGame =
 
     res.status(201).json({ game: newGame });
   };
+
+export const deleteGame =
+  (gamesRepository: GamesRepository) =>
+  async (
+    req: Request<{ gameId: string }>,
+    res: Response,
+    _next: NextFunction
+  ) => {
+    const { gameId } = req.params;
+
+    await gamesRepository.deleteGame(gameId);
+
+    res.status(200).json({ id: gameId });
+  };

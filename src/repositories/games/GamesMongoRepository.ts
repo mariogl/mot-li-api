@@ -13,13 +13,18 @@ class GamesMongoRepository implements GamesRepository {
     const newGame = new Game({
       ...game,
       length: game.word.length,
-      date: new Date(),
-      // Date: new Date(new Date(game.date).toUTCString()).setUTCHours(0, 0, 0, 0),
+      date: new Date(new Date(game.date).toUTCString()).setUTCHours(0, 0, 0, 0),
     });
 
     await newGame.save();
 
     return newGame;
+  }
+
+  async deleteGame(gameId: string): Promise<string> {
+    await Game.findByIdAndDelete(gameId);
+
+    return gameId;
   }
 }
 
