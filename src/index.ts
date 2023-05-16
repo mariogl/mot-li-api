@@ -12,6 +12,10 @@ if (!mongoDbUrl) {
   process.exit(1);
 }
 
+mongoose.set({
+  debug: true,
+});
+
 await mongoose.connect(mongoDbUrl);
 console.log(chalk.blue("Connected to database"));
 app.listen(port, () => {
