@@ -1,3 +1,4 @@
+import mongoose, { Types } from "mongoose";
 import {
   type GameDataRequestStructure,
   type GameDataStructure,
@@ -22,5 +23,6 @@ export const mockGameRequests: GameDataRequestStructure[] = [
 
 export const mockGames: GameDataStructure[] = mockGameRequests.map((game) => ({
   ...game,
+  _id: new Types.ObjectId(),
   length: 3,
 }));
