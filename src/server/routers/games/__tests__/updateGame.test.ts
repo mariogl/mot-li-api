@@ -1,4 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
+import bcrypt from "bcryptjs";
 import request from "supertest";
 import mongoose, { Types } from "mongoose";
 import Game from "../../../../database/models/Game";
@@ -6,13 +7,27 @@ import { mockGames } from "../../../../mocks/games";
 import app from "../../..";
 import connectToDatabase from "../../../../database/connectToDatabase";
 import { type GameStructure } from "../../../../types";
+import User from "../../../../database/models/User";
+import { mockUser } from "../../../../mocks/users";
 
 let server: MongoMemoryServer;
+let token: string;
 
 beforeAll(async () => {
   server = await MongoMemoryServer.create();
 
   await connectToDatabase(server.getUri());
+
+  await User.create({
+    ...mockUser,
+    password: await bcrypt.hash(mockUser.password, 10),
+  });
+
+  const response = await request(app)
+    .post("/user/login")
+    .send({ password: mockUser.password });
+
+  token = response.body.token as string;
 });
 
 afterAll(async () => {
@@ -39,6 +54,7 @@ describe("Given a PUT /games endpoint", () => {
 
       const response: { body: { game: GameStructure } } = await request(app)
         .put("/games")
+        .set("authorization", `Bearer ${token}`)
         .send(mockGame)
         .expect(200);
 
@@ -53,10 +69,19 @@ describe("Given a PUT /games endpoint", () => {
 
       const response = await request(app)
         .put("/games")
+        .set("authorization", `Bearer ${token}`)
         .send(mockGame)
         .expect(404);
 
       expect(response.body).toHaveProperty("error", "Game not found");
+    });
+  });
+
+  describe("When it receives a request without token", () => {
+    test("Then it should respond with a 401 status and an error", async () => {
+      const response = await request(app).put("/games").expect(401);
+
+      expect(response.body).toHaveProperty("error", "Missing token");
     });
   });
 });

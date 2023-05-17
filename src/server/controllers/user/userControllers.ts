@@ -24,7 +24,9 @@ export const loginUser =
         sub: user._id.toString(),
       };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET!);
+      const token = jwt.sign(payload, process.env.JWT_SECRET!, {
+        expiresIn: "7d",
+      });
 
       res.status(200).json({ token });
     } catch (error) {
