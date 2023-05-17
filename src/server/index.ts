@@ -6,6 +6,7 @@ import {
   generalError,
   notFoundError,
 } from "./middlewares/errorsMiddlewares.js";
+import userRouter from "./routers/user/userRouter.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.get("/", getPong);
 app.use("/games", gamesRouter);
+app.use("/user", userRouter);
 
 app.use(notFoundError);
 app.use(generalError);

@@ -15,3 +15,13 @@ export interface GameDataStructure extends GameDataRequestStructure {
 export interface GameStructure extends GameDataStructure {
   _id: Types.ObjectId;
 }
+
+export interface UserCredentials {
+  password: string;
+}
+
+export interface UserStructure extends UserCredentials {
+  _id: Types.ObjectId;
+  username: string;
+  lastLogin: Date;
+}
