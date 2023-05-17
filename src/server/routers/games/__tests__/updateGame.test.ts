@@ -30,16 +30,19 @@ afterEach(async () => {
   await Game.deleteMany({});
 });
 
-describe("Given a DELETE /games/:gameId endpoint", () => {
-  describe("When it receives a request with a game id", () => {
-    test("Then it should respond with a 200 status and the game id", async () => {
+describe("Given a PUT /games endpoint", () => {
+  describe("When it receives a request with a game to change", () => {
+    test("Then it should respond with a 200 status and the game changed", async () => {
       const mockGame = mockGames[0] as GameStructure;
+      const newWord = "new-word";
+      mockGame.word = newWord;
 
       const response: { body: { game: GameStructure } } = await request(app)
-        .delete(`/games/${mockGame._id.toString()}`)
+        .put("/games")
+        .send(mockGame)
         .expect(200);
 
-      expect(response.body).toHaveProperty("id", mockGame._id.toString());
+      expect(response.body.game).toHaveProperty("word", newWord);
     });
   });
 
@@ -49,7 +52,8 @@ describe("Given a DELETE /games/:gameId endpoint", () => {
       mockGame._id = new Types.ObjectId();
 
       const response = await request(app)
-        .delete(`/games/${mockGame._id.toString()}`)
+        .put("/games")
+        .send(mockGame)
         .expect(404);
 
       expect(response.body).toHaveProperty("error", "Game not found");

@@ -14,6 +14,7 @@ export const newGameSchema = {
 export const updateGameSchema = {
   body: Joi.object<GameStructure>({
     _id: Joi.string(),
+    length: Joi.number(),
     date: Joi.date().required(),
     word: Joi.string().required(),
     guesses: Joi.number().required(),
