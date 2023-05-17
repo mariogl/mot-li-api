@@ -7,7 +7,7 @@ import connectToDatabase from "./database/connectToDatabase.js";
 const port = process.env.PORT ?? 4000;
 const mongoDbUrl = process.env.MONGODB_CONNECTION;
 
-if (!mongoDbUrl) {
+if (!mongoDbUrl || !process.env.JWT_SECRET) {
   console.log(chalk.red("Missing env variables"));
   process.exit(1);
 }
