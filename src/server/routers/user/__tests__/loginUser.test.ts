@@ -2,13 +2,8 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import bcrypt from "bcryptjs";
 import request from "supertest";
 import mongoose from "mongoose";
-import { mockGameRequests } from "../../../../mocks/games";
 import app from "../../..";
 import connectToDatabase from "../../../../database/connectToDatabase";
-import {
-  type GameDataRequestStructure,
-  type GameStructure,
-} from "../../../../types";
 import User from "../../../../database/models/User";
 import { mockUser } from "../../../../mocks/users";
 

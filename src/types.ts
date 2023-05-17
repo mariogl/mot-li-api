@@ -1,3 +1,4 @@
+import { type Request } from "express";
 import { type Types } from "mongoose";
 
 export interface GameDataRequestStructure {
@@ -24,4 +25,8 @@ export interface UserStructure extends UserCredentials {
   _id: Types.ObjectId;
   username: string;
   lastLogin: Date;
+}
+
+export interface CustomRequest extends Request {
+  userId: string;
 }
