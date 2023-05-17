@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { type GameStructure } from "../../types";
 
 const gameSchema = new Schema({
   word: {
@@ -27,6 +28,6 @@ const gameSchema = new Schema({
   },
 });
 
-const Game = model("Game", gameSchema, "games");
+const Game = model<GameStructure>("Game", gameSchema, "games");
 
 export default Game;

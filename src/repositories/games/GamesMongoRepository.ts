@@ -5,7 +5,7 @@ import { type GamesRepository } from "./types.js";
 
 class GamesMongoRepository implements GamesRepository {
   async getGames(): Promise<GameStructure[]> {
-    const games = await Game.find().lean();
+    const games = await Game.find();
 
     return games;
   }
@@ -35,7 +35,7 @@ class GamesMongoRepository implements GamesRepository {
   async updateGame(game: GameStructure): Promise<GameStructure> {
     const updatedGame = await Game.findByIdAndUpdate(game._id, game, {
       new: true,
-    }).lean();
+    });
 
     if (!updatedGame) {
       throw new CustomError("Game not found", 404);
