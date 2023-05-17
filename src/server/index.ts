@@ -15,8 +15,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.get("/", getPong);
-app.use("/user", userRouter);
 app.use("/games", authMiddleware, gamesRouter);
+app.use("/user", userRouter);
 
 app.use(notFoundError);
 app.use(generalError);
