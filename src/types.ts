@@ -1,6 +1,6 @@
 import { type Types } from "mongoose";
 
-export interface GameDataRequesStructure {
+export interface GameDataRequestStructure {
   word: string;
   date: Date;
   guesses: number;
@@ -8,7 +8,7 @@ export interface GameDataRequesStructure {
   definition: string;
 }
 
-export interface GameDataStructure extends GameDataRequesStructure {
+export interface GameDataStructure extends GameDataRequestStructure {
   length: number;
 }
 
