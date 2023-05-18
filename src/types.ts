@@ -6,6 +6,7 @@ export interface GameDataRequestStructure {
   date: Date;
   guesses: number;
   link: string;
+  linkText: string;
   definition: string;
 }
 

@@ -10,6 +10,7 @@ export const mockGameRequests: GameDataRequestStructure[] = [
     word: "word",
     guesses: 3,
     link: "http://word.com",
+    linkText: "Link",
     definition: "definition of the word word",
   },
   {
@@ -17,6 +18,7 @@ export const mockGameRequests: GameDataRequestStructure[] = [
     word: "potato",
     guesses: 4,
     link: "http://word.com",
+    linkText: "Link",
     definition: "definition of the word potato",
   },
 ];
