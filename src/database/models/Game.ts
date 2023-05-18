@@ -22,6 +22,7 @@ const gameSchema = new Schema({
     type: String,
     required: true,
   },
+  linkText: String,
   definition: {
     type: String,
     required: true,
