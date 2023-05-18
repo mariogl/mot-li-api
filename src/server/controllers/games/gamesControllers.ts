@@ -14,6 +14,18 @@ export const getGames =
     }
   };
 
+export const getGame =
+  (gamesRepository: GamesRepository) =>
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const game = await gamesRepository.getCurrentGame();
+
+      res.status(200).json({ game });
+    } catch (error) {
+      next(error);
+    }
+  };
+
 export const addGame =
   (gamesRepository: GamesRepository) =>
   async (

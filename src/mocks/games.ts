@@ -6,7 +6,7 @@ import {
 
 export const mockGameRequests: GameDataRequestStructure[] = [
   {
-    date: new Date(new Date().toUTCString()),
+    date: new Date(),
     word: "word",
     guesses: 3,
     link: "http://word.com",
