@@ -10,6 +10,21 @@ class GamesMongoRepository implements GamesRepository {
     return games;
   }
 
+  async getCurrentGame(): Promise<GameStructure> {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    const game = await Game.findOne({ date: { $gte: today, $lt: tomorrow } });
+
+    if (!game) {
+      throw new CustomError("Game not found", 404);
+    }
+
+    return game;
+  }
+
   async addGame(game: GameDataStructure): Promise<GameStructure> {
     const newGame = new Game({
       ...game,
