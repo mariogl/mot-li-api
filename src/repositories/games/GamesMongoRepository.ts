@@ -5,7 +5,9 @@ import { type GamesRepository } from "./types.js";
 
 class GamesMongoRepository implements GamesRepository {
   async getGames(): Promise<GameStructure[]> {
-    const games = await Game.find();
+    const games = await Game.find({
+      date: { $gt: new Date().setHours(0, 0, 0, 0) },
+    });
 
     return games;
   }
