@@ -7,7 +7,13 @@ class GamesMongoRepository implements GamesRepository {
   async getGames(): Promise<GameStructure[]> {
     const games = await Game.find({
       date: { $gt: new Date().setHours(0, 0, 0, 0) },
-    });
+    }).sort({ date: 1 });
+
+    return games;
+  }
+
+  async getAllGames(): Promise<GameStructure[]> {
+    const games = await Game.find().sort({ date: 1 });
 
     return games;
   }

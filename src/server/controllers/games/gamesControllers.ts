@@ -15,6 +15,18 @@ export const getGames =
     }
   };
 
+export const getAllGames =
+  (gamesRepository: GamesRepository) =>
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const games = await gamesRepository.getAllGames();
+
+      res.status(200).json({ games });
+    } catch (error) {
+      next(error);
+    }
+  };
+
 export const getGameById =
   (gamesRepository: GamesRepository) =>
   async (
