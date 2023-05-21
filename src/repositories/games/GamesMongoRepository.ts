@@ -46,6 +46,12 @@ class GamesMongoRepository implements GamesRepository {
       date: new Date(new Date(game.date).toUTCString()).setUTCHours(0, 0, 0, 0),
     });
 
+    const existingGame = await Game.findOne({ date: newGame.date });
+
+    if (existingGame) {
+      throw new CustomError("Game exists", 409);
+    }
+
     await newGame.save();
 
     return newGame;
