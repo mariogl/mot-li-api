@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addGame,
   deleteGame,
+  getAllGames,
   getCurrentGame,
   getGameById,
   getGames,
@@ -22,6 +23,7 @@ const gamesRouter = Router();
 
 gamesRouter.get("/current", getCurrentGame(gamesRepository));
 gamesRouter.get("/", authMiddleware, getGames(gamesRepository));
+gamesRouter.get("/all", authMiddleware, getAllGames(gamesRepository));
 gamesRouter.get("/:gameId", authMiddleware, getGameById(gamesRepository));
 gamesRouter.post(
   "/",
