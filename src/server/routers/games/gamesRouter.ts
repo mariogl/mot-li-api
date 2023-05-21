@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
   addGame,
   deleteGame,
-  getGame,
+  getCurrentGame,
+  getGameById,
   getGames,
   updateGame,
 } from "../../controllers/games/gamesControllers.js";
@@ -19,8 +20,9 @@ const gamesRepository = new GamesMongoRepository();
 
 const gamesRouter = Router();
 
-gamesRouter.get("/current", getGame(gamesRepository));
+gamesRouter.get("/current", getCurrentGame(gamesRepository));
 gamesRouter.get("/", authMiddleware, getGames(gamesRepository));
+gamesRouter.get("/:gameId", authMiddleware, getGameById(gamesRepository));
 gamesRouter.post(
   "/",
   validate(newGameSchema, {}, { abortEarly: false }),
