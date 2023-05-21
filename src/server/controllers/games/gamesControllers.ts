@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { type GamesRepository } from "../../../repositories/games/types";
 import { type GameStructure, type GameDataStructure } from "../../../types";
+import CustomError from "../../../CustomError/CustomError.js";
 
 export const getGames =
   (gamesRepository: GamesRepository) =>
@@ -14,11 +15,37 @@ export const getGames =
     }
   };
 
-export const getGame =
+export const getGameById =
+  (gamesRepository: GamesRepository) =>
+  async (
+    req: Request<{ gameId: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { gameId } = req.params;
+
+      const game = await gamesRepository.getGameById(gameId);
+
+      if (!game) {
+        throw new CustomError("Game not found", 404);
+      }
+
+      res.status(200).json({ game });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+export const getCurrentGame =
   (gamesRepository: GamesRepository) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const game = await gamesRepository.getCurrentGame();
+
+      if (!game) {
+        throw new CustomError("Game not found", 404);
+      }
 
       res.status(200).json({ game });
     } catch (error) {

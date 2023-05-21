@@ -12,6 +12,12 @@ class GamesMongoRepository implements GamesRepository {
     return games;
   }
 
+  async getGameById(gameId: string): Promise<GameStructure | undefined> {
+    const game = await Game.findById(gameId);
+
+    return game ? game : undefined;
+  }
+
   async getCurrentGame(): Promise<GameStructure> {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
