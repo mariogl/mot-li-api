@@ -11,7 +11,7 @@ class GamesMongoRepository implements GamesRepository {
     today.setMinutes(today.getMinutes() + offset);
 
     const games = await Game.find({
-      date: { $gt: today },
+      date: { $gte: today },
     }).sort({ date: 1 });
 
     return games;
