@@ -5,8 +5,13 @@ import { type GamesRepository } from "./types.js";
 
 class GamesMongoRepository implements GamesRepository {
   async getGames(): Promise<GameStructure[]> {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const offset = today.getTimezoneOffset();
+    today.setMinutes(today.getMinutes() + offset);
+
     const games = await Game.find({
-      date: { $gt: new Date().setHours(0, 0, 0, 0) },
+      date: { $gt: today },
     }).sort({ date: 1 });
 
     return games;
