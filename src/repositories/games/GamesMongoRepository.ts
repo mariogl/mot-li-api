@@ -33,7 +33,7 @@ class GamesMongoRepository implements GamesRepository {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
     const offset = today.getTimezoneOffset();
-    today.setMinutes(today.getMinutes() + offset);
+    today.setMinutes(today.getMinutes() - offset);
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
 
