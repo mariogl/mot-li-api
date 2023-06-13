@@ -24,8 +24,8 @@ export const authMiddleware = (
     next();
   } catch (error: unknown) {
     const customError =
-      (error as CustomError).name === "JsonWebTokenError"
-        ? new CustomError("Invalid token", 401)
+      (error as CustomError).name === "TokenExpiredError"
+        ? new CustomError("Expired token", 401)
         : error;
 
     next(customError);
