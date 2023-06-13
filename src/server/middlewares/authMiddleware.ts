@@ -22,7 +22,12 @@ export const authMiddleware = (
     req.userId = userPayload.sub as string;
 
     next();
-  } catch (error) {
-    next(error);
+  } catch (error: unknown) {
+    const customError =
+      (error as CustomError).name === "JsonWebTokenError"
+        ? new CustomError("Invalid token", 401)
+        : error;
+
+    next(customError);
   }
 };
