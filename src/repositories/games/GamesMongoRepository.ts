@@ -32,12 +32,9 @@ class GamesMongoRepository implements GamesRepository {
   async getCurrentGame(): Promise<GameStructure> {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
-    const offset = today.getTimezoneOffset();
-    today.setMinutes(today.getMinutes() + offset);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
+    console.log("today: ", today);
 
-    const game = await Game.findOne({ date: { $gte: today, $lt: tomorrow } });
+    const game = await Game.findOne({ date: today });
 
     if (!game) {
       throw new CustomError("Game not found", 404);
