@@ -1,14 +1,13 @@
+import moment from "moment-timezone";
 import CustomError from "../../CustomError/CustomError.js";
 import Game from "../../database/models/Game.js";
 import { type GameDataStructure, type GameStructure } from "../../types.js";
 import { type GamesRepository } from "./types.js";
 
+moment.tz.setDefault("Europe/Madrid");
 class GamesMongoRepository implements GamesRepository {
   async getGames(): Promise<GameStructure[]> {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
-    const offset = today.getTimezoneOffset();
-    today.setMinutes(today.getMinutes() + offset);
+    const today = moment().format("YYYY-MM-DD HH:mm:ss");
 
     const games = await Game.find({
       date: { $gte: today },
