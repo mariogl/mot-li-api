@@ -29,15 +29,18 @@ class GamesMongoRepository implements GamesRepository {
   }
 
   async getCurrentGame(): Promise<GameStructure> {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
+    const today = new Date(moment().format("YYYY-MM-DD HH:mm:ss"));
     console.log("today: ", today);
+    today.setUTCHours(0, 0, 0, 0);
+    console.log("today reset: ", today);
 
     const game = await Game.findOne({ date: today });
 
     if (!game) {
       throw new CustomError("Game not found", 404);
     }
+
+    console.log("word: ", game.word);
 
     return game;
   }
