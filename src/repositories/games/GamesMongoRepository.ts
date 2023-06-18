@@ -7,7 +7,7 @@ import { type GamesRepository } from "./types.js";
 moment.tz.setDefault("Europe/Madrid");
 class GamesMongoRepository implements GamesRepository {
   async getGames(): Promise<GameStructure[]> {
-    const today = moment().format("YYYY-MM-DD HH:mm:ss");
+    const today = moment().startOf("day").valueOf();
 
     const games = await Game.find({
       date: { $gte: today },
@@ -29,8 +29,7 @@ class GamesMongoRepository implements GamesRepository {
   }
 
   async getCurrentGame(): Promise<GameStructure> {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
+    const today = moment().utc().startOf("day").valueOf();
     console.log("today: ", today);
 
     const game = await Game.findOne({ date: today });
@@ -38,6 +37,8 @@ class GamesMongoRepository implements GamesRepository {
     if (!game) {
       throw new CustomError("Game not found", 404);
     }
+
+    console.log("word: ", game.word);
 
     return game;
   }
