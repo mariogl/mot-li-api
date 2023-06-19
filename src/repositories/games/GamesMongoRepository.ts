@@ -1,13 +1,12 @@
-import moment from "moment-timezone";
+import moment from "moment";
 import CustomError from "../../CustomError/CustomError.js";
 import Game from "../../database/models/Game.js";
 import { type GameDataStructure, type GameStructure } from "../../types.js";
 import { type GamesRepository } from "./types.js";
 
-moment.tz.setDefault("Europe/Madrid");
 class GamesMongoRepository implements GamesRepository {
   async getGames(): Promise<GameStructure[]> {
-    const today = moment().format("YYYY-MM-DD HH:mm:ss");
+    const today = moment().utcOffset(2).startOf("day").valueOf();
 
     const games = await Game.find({
       date: { $gte: today },
@@ -29,18 +28,13 @@ class GamesMongoRepository implements GamesRepository {
   }
 
   async getCurrentGame(): Promise<GameStructure> {
-    const today = new Date(moment().format("YYYY-MM-DD HH:mm:ss"));
-    console.log("today: ", today);
-    today.setUTCHours(0, 0, 0, 0);
-    console.log("today reset: ", today);
+    const todayReset = moment().utcOffset(2).startOf("day").utc(true);
 
-    const game = await Game.findOne({ date: today });
+    const game = await Game.findOne({ date: todayReset });
 
     if (!game) {
       throw new CustomError("Game not found", 404);
     }
-
-    console.log("word: ", game.word);
 
     return game;
   }

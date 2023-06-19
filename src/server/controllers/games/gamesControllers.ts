@@ -1,4 +1,3 @@
-import moment from "moment-timezone";
 import { type NextFunction, type Request, type Response } from "express";
 import { type GamesRepository } from "../../../repositories/games/types";
 import { type GameStructure, type GameDataStructure } from "../../../types";
@@ -54,8 +53,6 @@ export const getCurrentGame =
   (gamesRepository: GamesRepository) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      moment.tz.setDefault("Europe/Madrid");
-
       const game = await gamesRepository.getCurrentGame();
 
       if (!game) {
