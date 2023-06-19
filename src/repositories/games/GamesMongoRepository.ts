@@ -29,7 +29,7 @@ class GamesMongoRepository implements GamesRepository {
   }
 
   async getCurrentGame(): Promise<GameStructure> {
-    const today = new Date();
+    const today = new Date(moment().format("YYYY-MM-DD HH:mm:ss"));
     console.log("today: ", today);
     today.setUTCHours(0, 0, 0, 0);
     console.log("today reset: ", today);
