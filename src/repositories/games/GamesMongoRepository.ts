@@ -31,6 +31,8 @@ class GamesMongoRepository implements GamesRepository {
   async getCurrentGame(): Promise<GameStructure> {
     const today = moment().utc().startOf("day").valueOf();
     console.log("today: ", today);
+    today.setUTCHours(0, 0, 0, 0);
+    console.log("today reset: ", today);
 
     const game = await Game.findOne({ date: today });
 
