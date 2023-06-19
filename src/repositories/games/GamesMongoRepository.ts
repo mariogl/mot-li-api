@@ -40,6 +40,8 @@ class GamesMongoRepository implements GamesRepository {
       throw new CustomError("Game not found", 404);
     }
 
+    console.log("word: ", game.word);
+
     return game;
   }
 
