@@ -1,6 +1,7 @@
 import { type GameDataStructure, type GameStructure } from "../../types";
 
 export interface GamesRepository {
+  isWordScheduled: (word: string) => Promise<boolean>;
   getGames: () => Promise<GameStructure[]>;
   getAllGames: () => Promise<GameStructure[]>;
   getGameById: (gameId: string) => Promise<GameStructure | undefined>;

@@ -1,7 +1,24 @@
 import { type NextFunction, type Request, type Response } from "express";
-import { type GamesRepository } from "../../../repositories/games/types";
-import { type GameStructure, type GameDataStructure } from "../../../types";
 import CustomError from "../../../CustomError/CustomError.js";
+import { type GamesRepository } from "../../../repositories/games/types";
+import { type GameDataStructure, type GameStructure } from "../../../types";
+
+export const isWordScheduled =
+  (gamesRepository: GamesRepository) =>
+  async (
+    req: Request<
+      Record<string, unknown>,
+      Record<string, unknown>,
+      Record<string, unknown>,
+      { word: string }
+    >,
+    res: Response
+  ) => {
+    const { word } = req.query;
+    const isScheduled = await gamesRepository.isWordScheduled(word);
+
+    res.status(200).json({ isScheduled });
+  };
 
 export const getGames =
   (gamesRepository: GamesRepository) =>

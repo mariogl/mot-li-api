@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { validate } from "express-validation";
+import GamesMongoRepository from "../../../repositories/games/GamesMongoRepository.js";
 import {
   addGame,
   deleteGame,
@@ -6,21 +8,25 @@ import {
   getCurrentGame,
   getGameById,
   getGames,
+  isWordScheduled,
   updateGame,
 } from "../../controllers/games/gamesControllers.js";
-import GamesMongoRepository from "../../../repositories/games/GamesMongoRepository.js";
-import { validate } from "express-validation";
+import { authMiddleware } from "../../middlewares/authMiddleware.js";
 import {
   deleteGameSchema,
   newGameSchema,
   updateGameSchema,
 } from "../../schemas/gameSchemas.js";
-import { authMiddleware } from "../../middlewares/authMiddleware.js";
 
 const gamesRepository = new GamesMongoRepository();
 
 const gamesRouter = Router();
 
+gamesRouter.get(
+  "/is-word-scheduled",
+  authMiddleware,
+  isWordScheduled(gamesRepository)
+);
 gamesRouter.get("/current", getCurrentGame(gamesRepository));
 gamesRouter.get("/", authMiddleware, getGames(gamesRepository));
 gamesRouter.get("/all", authMiddleware, getAllGames(gamesRepository));
