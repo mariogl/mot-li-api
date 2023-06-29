@@ -5,6 +5,14 @@ import { type GameDataStructure, type GameStructure } from "../../types.js";
 import { type GamesRepository } from "./types.js";
 
 class GamesMongoRepository implements GamesRepository {
+  async isWordScheduled(word: string): Promise<boolean> {
+    const existingWord = await Game.findOne({
+      word: word.toLocaleLowerCase(),
+    });
+
+    return Boolean(existingWord);
+  }
+
   async getGames(): Promise<GameStructure[]> {
     const today = moment().utcOffset(2).startOf("day").valueOf();
 
