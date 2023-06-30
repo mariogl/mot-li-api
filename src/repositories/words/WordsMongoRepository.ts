@@ -3,8 +3,8 @@ import { type WordStructure } from "../../types";
 import { type WordsRepository } from "./types";
 
 class WordsMongoRepository implements WordsRepository {
-  async getWords(): Promise<WordStructure[]> {
-    const words = await Word.find().sort({ word: 1 });
+  async getWords(length: number): Promise<WordStructure[]> {
+    const words = await Word.find({ length }).sort({ word: 1 });
 
     return words;
   }
