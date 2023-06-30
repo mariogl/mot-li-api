@@ -1,4 +1,4 @@
-import Word from "../../database/models/Word";
+import Word from "../../database/models/Word.js";
 import { type WordStructure } from "../../types";
 import { type WordsRepository } from "./types";
 
