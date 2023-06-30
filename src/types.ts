@@ -1,8 +1,19 @@
 import { type Request } from "express";
 import { type Types } from "mongoose";
 
-export interface GameDataRequestStructure {
+export interface WordDataRequestStructure {
   word: string;
+}
+
+export interface WordDataStructure extends WordDataRequestStructure {
+  length: number;
+}
+
+export interface WordStructure extends WordDataStructure {
+  _id: Types.ObjectId;
+}
+
+export interface GameDataRequestStructure extends WordDataRequestStructure {
   date: Date;
   guesses: number;
   link: string;
