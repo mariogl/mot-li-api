@@ -4,6 +4,7 @@ import WordsMongoRepository from "../../../repositories/words/WordsMongoReposito
 import {
   addWord,
   deleteWord,
+  doesWordExist,
   getWords,
 } from "../../controllers/words/wordsControllers.js";
 import { authMiddleware } from "../../middlewares/authMiddleware.js";
@@ -14,6 +15,7 @@ const wordsRepository = new WordsMongoRepository();
 const wordsRouter = Router();
 
 wordsRouter.get("/", authMiddleware, getWords(wordsRepository));
+wordsRouter.get("/exists", authMiddleware, doesWordExist(wordsRepository));
 wordsRouter.post(
   "/",
   authMiddleware,

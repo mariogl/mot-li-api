@@ -36,6 +36,12 @@ class WordsMongoRepository implements WordsRepository {
 
     return deletedWord._id.toString();
   }
+
+  async doesWordExist(word: string): Promise<boolean> {
+    const wordExists = await Word.findOne({ word });
+
+    return Boolean(wordExists);
+  }
 }
 
 export default WordsMongoRepository;
