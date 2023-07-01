@@ -6,3 +6,9 @@ export const newWordSchema = {
     word: Joi.string().required(),
   }),
 };
+
+export const deleteWordSchema = {
+  params: Joi.object({
+    wordId: Joi.string().required(),
+  }),
+};

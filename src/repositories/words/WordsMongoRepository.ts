@@ -26,6 +26,16 @@ class WordsMongoRepository implements WordsRepository {
 
     return newWord;
   }
+
+  async deleteWord(wordId: string): Promise<string> {
+    const deletedWord = await Word.findByIdAndDelete(wordId);
+
+    if (!deletedWord) {
+      throw new CustomError("Word not found", 404);
+    }
+
+    return deletedWord._id.toString();
+  }
 }
 
 export default WordsMongoRepository;
