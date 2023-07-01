@@ -63,3 +63,20 @@ export const deleteWord =
       next(error);
     }
   };
+
+export const doesWordExist =
+  (wordsRepository: WordsRepository) =>
+  async (
+    req: Request<
+      Record<string, unknown>,
+      Record<string, unknown>,
+      Record<string, unknown>,
+      { word: string }
+    >,
+    res: Response
+  ) => {
+    const { word } = req.query;
+    const exists = await wordsRepository.doesWordExist(word);
+
+    res.status(200).json({ exists });
+  };
