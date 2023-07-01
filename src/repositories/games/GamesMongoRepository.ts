@@ -60,14 +60,6 @@ class GamesMongoRepository implements GamesRepository {
       throw new CustomError("Game exists", 409);
     }
 
-    const existingWord = await Game.findOne({
-      word: game.word.toLocaleLowerCase(),
-    });
-
-    if (existingWord) {
-      throw new CustomError("Word scheduled", 409);
-    }
-
     await newGame.save();
 
     return newGame;
