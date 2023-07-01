@@ -33,6 +33,7 @@ gamesRouter.get("/all", authMiddleware, getAllGames(gamesRepository));
 gamesRouter.get("/:gameId", authMiddleware, getGameById(gamesRepository));
 gamesRouter.post(
   "/",
+  authMiddleware,
   validate(newGameSchema, {}, { abortEarly: false }),
   addGame(gamesRepository)
 );

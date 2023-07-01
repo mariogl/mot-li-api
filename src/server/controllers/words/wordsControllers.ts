@@ -45,3 +45,21 @@ export const addWord =
       next(error);
     }
   };
+
+export const deleteWord =
+  (wordsRepository: WordsRepository) =>
+  async (
+    req: Request<{ wordId: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { wordId } = req.params;
+
+    try {
+      await wordsRepository.deleteWord(wordId);
+
+      res.status(200).json({ id: wordId });
+    } catch (error) {
+      next(error);
+    }
+  };
