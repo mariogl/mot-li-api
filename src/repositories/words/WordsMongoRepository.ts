@@ -1,5 +1,6 @@
+import CustomError from "../../CustomError/CustomError.js";
 import Word from "../../database/models/Word.js";
-import { type WordStructure } from "../../types";
+import { type WordDataStructure, type WordStructure } from "../../types";
 import { type WordsRepository } from "./types";
 
 class WordsMongoRepository implements WordsRepository {
@@ -7,6 +8,23 @@ class WordsMongoRepository implements WordsRepository {
     const words = await Word.find({ length }).sort({ word: 1 });
 
     return words;
+  }
+
+  async addWord(word: WordDataStructure): Promise<WordStructure> {
+    const newWord = new Word({
+      ...word,
+      length: word.word.length,
+    });
+
+    const existingWord = await Word.findOne({ word: newWord.word });
+
+    if (existingWord) {
+      throw new CustomError("Word exists", 409);
+    }
+
+    await newWord.save();
+
+    return newWord;
   }
 }
 
