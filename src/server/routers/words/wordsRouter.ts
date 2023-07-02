@@ -14,7 +14,7 @@ const wordsRepository = new WordsMongoRepository();
 
 const wordsRouter = Router();
 
-wordsRouter.get("/", authMiddleware, getWords(wordsRepository));
+wordsRouter.get("/", getWords(wordsRepository));
 wordsRouter.get("/exists", authMiddleware, doesWordExist(wordsRepository));
 wordsRouter.post(
   "/",
