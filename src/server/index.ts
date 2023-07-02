@@ -20,10 +20,10 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.get("/", getPong);
-app.use("/games", gamesRouter);
-app.use("/words", wordsRouter);
-app.use("/user", userRouter);
+app.get("/api/", getPong);
+app.use("/api/games", gamesRouter);
+app.use("/api/words", wordsRouter);
+app.use("/api/user", userRouter);
 
 app.use(notFoundError);
 app.use(generalError);
