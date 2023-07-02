@@ -12,6 +12,8 @@ import wordsRouter from "./routers/words/wordsRouter.js";
 
 const app = express();
 
+const baseUrl = `${process.env.BASE_URL!}/api`;
+
 app.use(
   cors({
     origin: process.env.ALLOWED_ORIGINS?.split(","),
@@ -20,10 +22,10 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.get("/api/", getPong);
-app.use("/api/games", gamesRouter);
-app.use("/api/words", wordsRouter);
-app.use("/api/user", userRouter);
+app.get(`${baseUrl}/`, getPong);
+app.use(`${baseUrl}/games`, gamesRouter);
+app.use(`${baseUrl}/words`, wordsRouter);
+app.use(`${baseUrl}/user`, userRouter);
 
 app.use(notFoundError);
 app.use(generalError);
