@@ -1,10 +1,11 @@
 import { Joi } from "express-validation";
-import { type GameStructure, type GameDataStructure } from "../../types";
+import { type GameDataStructure, type GameStructure } from "../../types";
 
 export const newGameSchema = {
   body: Joi.object<GameDataStructure>({
     date: Joi.date().required(),
     word: Joi.string().required(),
+    actualWord: Joi.string().required(),
     guesses: Joi.number().required(),
     link: Joi.string().required(),
     linkText: Joi.string().required(),
@@ -23,6 +24,7 @@ export const updateGameSchema = {
     _id: Joi.string(),
     length: Joi.number(),
     date: Joi.date().required(),
+    actualWord: Joi.string().required(),
     word: Joi.string().required(),
     guesses: Joi.number().required(),
     link: Joi.string().required(),
