@@ -7,6 +7,7 @@ import {
 export const mockGameRequests: GameDataRequestStructure[] = [
   {
     date: new Date(),
+    actualWord: "word",
     word: "word",
     guesses: 3,
     link: "http://word.com",
@@ -15,6 +16,7 @@ export const mockGameRequests: GameDataRequestStructure[] = [
   },
   {
     date: new Date(),
+    actualWord: "potato",
     word: "potato",
     guesses: 4,
     link: "http://word.com",

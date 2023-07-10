@@ -3,6 +3,7 @@ import { type Types } from "mongoose";
 
 export interface WordDataRequestStructure {
   word: string;
+  actualWord: string;
 }
 
 export interface WordDataStructure extends WordDataRequestStructure {
