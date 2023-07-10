@@ -6,6 +6,10 @@ const gameSchema = new Schema({
     type: String,
     required: true,
   },
+  actualWord: {
+    type: String,
+    required: true,
+  },
   length: {
     type: Number,
     required: true,
